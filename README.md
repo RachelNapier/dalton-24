@@ -1,9 +1,19 @@
-# Dalton 24 — Sandevistan Card
-## Happy Birthday!♡✧˚ ༘ ⋆｡♡˚
+# Happy Birthday, Dalton 🌇
 
-**Live site:** https://rachelnapier.github.io/dalton-24/
+This page is for you, happy 24th birthday 🎂✨️
 
-## Bookmark / Add to Home Screen
-- iPhone/iPad: Share → Add to Home Screen
-- Android (Chrome): ⋮ → Add to Home screen
-- Desktop: Press ⌘D (Mac) or Ctrl+D (Windows)
+Open it here:  
+👉 [https://rachelnapier.github.io/dalton-24/](https://rachelnapier.github.io/dalton-24/)
+
+## How to save it on your iPhone
+1. Open the link in **Safari**.  
+2. Tap the **Share** icon (square with arrow).  
+3. Choose **Add to Home Screen**.  
+4. It will appear like an app on your phone.  
+
+You can also just bookmark it in Safari or Chrome if you prefer.  
+
+---
+
+*⋆˙♡Love, Rachelツ*  
+
