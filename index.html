@@ -35,9 +35,9 @@
          border-radius:22px; padding:28px 28px 22px;
          background: linear-gradient(180deg, rgba(0,247,255,.06), rgba(255,43,214,.06));
          box-shadow: 0 0 .6rem var(--neon), inset 0 0 .4rem rgba(0,247,255,.25);
-         margin:auto;
+         margin:auto; position:relative; overflow:hidden;
          }
-         .header{ display:flex; justify-content:space-between; align-items:center; gap:12px }
+         .header{ display:flex; justify-content:space-between; align-items:center; gap:12px; flex-wrap:wrap }
          .badge{
          font-family:'Orbitron', sans-serif; letter-spacing:.12em; font-weight:700; color:#0b0f14;
          padding:8px 12px; border-radius:999px;
@@ -45,6 +45,7 @@
          box-shadow:0 0 .6rem var(--yellow);
          text-shadow: 0 0 6px #00e676; /* Dalton green glow */
          }
+         .controls{ display:flex; gap:8px; align-items:center }
          .sandevistan-btn{
          --c:var(--neon);
          border:2px solid var(--c); color:var(--c); background:transparent;
@@ -62,12 +63,11 @@
          transition:transform .12s ease, box-shadow .12s ease;
          }
          .audio-toggle:hover{ transform: translateY(-1px) }
-         .audio-toggle[aria-pressed="true"]{ 
+         .audio-toggle[aria-pressed="true"]{
          background: linear-gradient(90deg, var(--yellow), var(--neon));
-         color:#00161a; 
+         color:#00161a;
          box-shadow: 0 0 .6rem rgba(0,247,255,.5);
          }
-         <button class="audio-toggle" id="audioToggle" aria-pressed="false" aria-label="Toggle ambient audio">🔊</button>
          .title{
          font-family:'Orbitron', sans-serif; font-size:clamp(28px,5vw,46px);
          margin:14px 0 6px; text-shadow:0 0 10px rgba(0,247,255,.6);
@@ -92,8 +92,8 @@
          background: repeating-linear-gradient(to bottom, transparent 0 2px, rgba(255,255,255,.03) 2px 3px);
          mix-blend-mode: overlay; animation: scan 6s linear infinite;
          }
-         @keyframes scan{ to{ background-position: 0 100vh } }      
-         /* Glitch effect on name when active */
+         @keyframes scan{ to{ background-position: 0 100vh } }
+         /* Glitch + active state */
          .glitch{
          position:relative; display:inline-block; font-weight:700;
          text-shadow: 1px 0 var(--magenta), -1px 0 var(--neon);
@@ -105,12 +105,21 @@
          42%{ transform: translate(-1px,1px) }
          61%{ transform: translate(1px,0) skewX(8deg) }
          }
-         /* Active state boosts */
          .active .card{
          box-shadow: 0 0 1.2rem var(--neon), 0 0 2.0rem var(--magenta), inset 0 0 .8rem rgba(0,247,255,.35);
          }
          .active .sandevistan-btn{
          background:var(--neon); color:#00161a; box-shadow: 0 0 1rem rgba(0,247,255,.9)
+         }
+         /* Footer */
+         .footer{ display:flex; justify-content:space-between; align-items:center; gap:10px; margin-top:16px; opacity:.9; font-size:14px }
+         .chip{
+         border:1px solid rgba(255,255,255,.2); padding:6px 10px; border-radius:999px; font-family:'Orbitron'; letter-spacing:.1em;
+         background: rgba(0,0,0,.25);
+         }
+         /* a11y helper */
+         .sr-only{
+         position:absolute; left:-9999px; top:auto; width:1px; height:1px; overflow:hidden;
          }
       </style>
    </head>
@@ -118,16 +127,16 @@
       <div class="grid"></div>
       <div class="scan"></div>
       <div class="wrap">
-         <div class="card">
+         <div class="card" id="card">
             <div class="header">
                <div class="badge">DALTON // AGE: 24</div>
-               <button class="sandevistan-btn" id="toggle">Activate Sandevistan</button>
+               <div class="controls">
+                  <button class="sandevistan-btn" id="toggle">Activate Sandevistan</button>
+                  <button class="audio-toggle" id="audioToggle" aria-pressed="false" aria-label="Toggle ambient audio">🔊</button>
+               </div>
             </div>
             <h1 class="title">Happy 24th, <span class="glitch">Dalton</span> 🎉</h1>
             <h2 class="sr-only">Edgerunners-themed birthday card</h2>
-            <h2 style="position:absolute;left:-9999px;top:auto;width:1px;height:1px;overflow:hidden;">
-               Edgerunners-themed birthday card
-            </h2>
             <p class="subtitle">“Choom, time slows down when I’m with you.”</p>
             <div class="strip" role="status" aria-live="polite" style="
                display:flex; justify-content:space-between; align-items:center; gap:10px;
@@ -137,8 +146,12 @@
                <span style="font-family:'Orbitron',sans-serif; letter-spacing:.12em; font-weight:700; color:var(--neon)">COUNTDOWN</span>
                <div id="timer" style="font-family:'Orbitron',sans-serif; font-size:clamp(22px,4.5vw,34px); letter-spacing:.06em; text-shadow:0 0 10px rgba(0,247,255,.6); min-width:210px; text-align:right;">00:00:24</div>
             </div>
-            <div class="panel">
+            <div class="panel" id="msg">
                <p>Boot sequence ready. Effects coming online…</p>
+            </div>
+            <div class="footer">
+               <div class="chip">BUILD: EDGERUNNERS-HBD</div>
+               <div class="chip" id="state">STATE: STANDBY</div>
             </div>
          </div>
       </div>
