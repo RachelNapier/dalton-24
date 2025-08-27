@@ -4,6 +4,14 @@
       <meta charset="utf-8" />
       <meta name="viewport" content="width=device-width, initial-scale=1" />
       <title>Dalton — Birthday Card</title>
+<meta name="description" content="Activate Sandevistan and celebrate Dalton's 24th in neon Edgerunners style.">
+<meta name="theme-color" content="#fcee09"><!-- Cyberpunk yellow -->
+<meta property="og:title" content="Happy 24th, Dalton — Sandevistan Card">
+<meta property="og:description" content="Choom, time slows down when I’m with you.">
+<meta property="og:type" content="website">
+<meta property="og:image" content="data:image/svg+xml;utf8,<?xml version='1.0' encoding='UTF-8'?><svg xmlns='http://www.w3.org/2000/svg' width='1200' height='630'><rect width='1200' height='630' fill='%230b0f14'/><rect x='40' y='40' width='1120' height='550' rx='28' ry='28' fill='none' stroke='%23fcee09' stroke-width='6'/><text x='600' y='320' text-anchor='middle' font-family='Verdana, Trebuchet MS, sans-serif' font-size='64' fill='%23e9f1ff'>Happy 24th, Dalton</text></svg>">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 100 100%27%3E%3Ctext y=%27.9em%27 font-size=%2790%27%3E🎂%3C/text%3E%3C/svg%3E">
+
       <link rel="preconnect" href="https://fonts.googleapis.com">
       <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&family=Rajdhani:wght@500;700&display=swap" rel="stylesheet">
       <style>
@@ -102,6 +110,9 @@
 
             </div>
 <h1 class="title">Happy 24th, <span class="glitch">Dalton</span> 🎉</h1>
+<h2 style="position:absolute;left:-9999px;top:auto;width:1px;height:1px;overflow:hidden;">
+  Edgerunners-themed interactive birthday card
+</h2>
 
             <p class="subtitle">“Choom, time slows down when I’m with you.”</p>
             <div class="strip" role="status" aria-live="polite" style="
@@ -151,5 +162,37 @@
     toggleBtn.textContent = active ? 'Deactivate Sandevistan' : 'Activate Sandevistan';
   });
 </script>
+      <script>
+  // Confetti biased toward Dalton green (#00e676), with Edgerunners cyan/magenta/yellow
+  function confetti(){
+    const n = 90;
+    for(let i=0;i<n;i++){
+      const p = document.createElement('div');
+      p.style.position='fixed';
+      p.style.left = (Math.random()*100)+'vw';
+      p.style.top  = '-8px';
+      p.style.width = '6px';
+      p.style.height= '10px';
+      p.style.background = (['#00e676','#00e676','#00f7ff','#ff2bd6','#fcee09','#00e676'])[i%6];
+      p.style.transform = `rotate(${Math.random()*180}deg)`;
+      p.style.opacity = '0.9';
+      p.style.zIndex = 9999;
+      p.style.pointerEvents = 'none';
+      document.body.appendChild(p);
+      const duration = 1200 + Math.random()*1200;
+      p.animate([
+        { transform:`translateY(0) rotate(0deg)`, opacity:1 },
+        { transform:`translateY(100vh) rotate(${120+Math.random()*120}deg)`, opacity:0.9 }
+      ], { duration, easing:'cubic-bezier(.2,.8,.2,1)' }).onfinish = ()=> p.remove();
+    }
+  }
+
+  // Trigger confetti when timer ends (reuse existing timer loop)
+  const originalTick = tick;
+  function tick(now){
+    originalTick(now);
+  }
+</script>
+
    </body>
 </html>
