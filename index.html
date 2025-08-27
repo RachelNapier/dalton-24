@@ -1,1 +1,71 @@
-
+<!doctype html>
+<html lang="en">
+   <head>
+      <meta charset="utf-8" />
+      <meta name="viewport" content="width=device-width, initial-scale=1" />
+      <title>Dalton — Birthday Card</title>
+      <link rel="preconnect" href="https://fonts.googleapis.com">
+      <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&family=Rajdhani:wght@500;700&display=swap" rel="stylesheet">
+      <style>
+         :root{
+         --bg:#0b0f14;
+         --neon:#00f7ff;      /* Edgerunners cyan */
+         --magenta:#ff2bd6;   /* Edgerunners magenta */
+         --yellow:#fcee09;    /* Cyberpunk yellow */
+         --world-speed:1;
+         }
+         *{box-sizing:border-box}
+         html,body{height:100%}
+         body{
+         margin:0; background:#0b0f14; color:#e9f1ff;
+         font-family:'Rajdhani', system-ui, sans-serif;
+         display:grid; place-items:center;
+         }
+         .wrap{ width:100%; padding:24px; }
+         .card{
+         width:min(820px,92vw); border:1px solid rgba(0,247,255,.35);
+         border-radius:22px; padding:28px 28px 22px;
+         background: linear-gradient(180deg, rgba(0,247,255,.06), rgba(255,43,214,.06));
+         box-shadow: 0 0 .6rem var(--neon), inset 0 0 .4rem rgba(0,247,255,.25);
+         margin:auto;
+         }
+         .header{ display:flex; justify-content:space-between; align-items:center; gap:12px }
+         .badge{
+         font-family:'Orbitron', sans-serif; letter-spacing:.12em; font-weight:700; color:#0b0f14;
+         padding:8px 12px; border-radius:999px;
+         background:linear-gradient(90deg,var(--yellow),var(--neon));
+         box-shadow:0 0 .6rem var(--yellow);
+         }
+         .sandevistan-btn{
+         --c:var(--neon);
+         border:2px solid var(--c); color:var(--c); background:transparent;
+         padding:10px 16px; border-radius:12px; cursor:pointer; letter-spacing:.08em;
+         font-family:'Orbitron', sans-serif; font-weight:700; text-transform:uppercase;
+         }
+         .title{
+         font-family:'Orbitron', sans-serif; font-size:clamp(28px,5vw,46px);
+         margin:14px 0 6px; text-shadow:0 0 10px rgba(0,247,255,.6);
+         }
+         .subtitle{ opacity:.9; margin:0 0 12px }
+         .panel{
+         border:1px solid rgba(255,43,214,.35); border-radius:16px; padding:16px;
+         background: linear-gradient(180deg, rgba(255,43,214,.12), rgba(0,247,255,.08));
+         }
+      </style>
+   </head>
+   <body>
+      <div class="wrap">
+         <div class="card">
+            <div class="header">
+               <div class="badge">DALTON // AGE: 24</div>
+               <button class="sandevistan-btn" disabled>Activate Sandevistan</button>
+            </div>
+            <h1 class="title">Happy 24th, Dalton 🎉</h1>
+            <p class="subtitle">“Choom, time slows down when I’m with you.”</p>
+            <div class="panel">
+               <p>Boot sequence ready. Effects coming online…</p>
+            </div>
+         </div>
+      </div>
+   </body>
+</html>
