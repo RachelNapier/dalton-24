@@ -189,9 +189,28 @@
 
   // Trigger confetti when timer ends (reuse existing timer loop)
   const originalTick = tick;
-  function tick(now){
-    originalTick(now);
+function tick(now){
+  const dt = now - last; 
+  last = now;
+
+  // Decrease time (slower if Sandevistan is active)
+  remaining -= active ? dt * 0.35 : dt;
+
+  // Clamp to zero and update display
+  if (remaining < 0) remaining = 0;
+  timerEl.textContent = format(remaining);
+
+  //  Fire confetti once when timer hits zero
+  if (remaining === 0 && !window.__confettiFired) {
+    window.__confettiFired = true;
+    stateEl.textContent = 'STATE: PARTY MODE';
+    toggleBtn.disabled = true;
+    toggleBtn.textContent = '🎂 Complete';
+    confetti();
   }
+
+  requestAnimationFrame(tick);
+}
 </script>
 
    </body>
