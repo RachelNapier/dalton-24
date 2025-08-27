@@ -1,316 +1,317 @@
 <!doctype html>
 <html lang="en">
-   <head>
-      <meta charset="utf-8" />
-      <meta name="viewport" content="width=device-width, initial-scale=1" />
-      <title>Dalton — Birthday Card</title>
-      <meta name="description" content="Activate Sandevistan and celebrate Dalton's 24th in neon Edgerunners style.">
-      <meta name="theme-color" content="#fcee09">
-      <!-- Cyberpunk yellow -->
-      <meta property="og:title" content="Happy 24th, Dalton — Sandevistan Card">
-      <meta property="og:description" content="Choom, time slows down when I’m with you.">
-      <meta property="og:type" content="website">
-      <meta property="og:image" content="data:image/svg+xml;utf8,<?xml version='1.0' encoding='UTF-8'?><svg xmlns='http://www.w3.org/2000/svg' width='1200' height='630'><rect width='1200' height='630' fill='%230b0f14'/><rect x='40' y='40' width='1120' height='550' rx='28' ry='28' fill='none' stroke='%23fcee09' stroke-width='6'/><text x='600' y='320' text-anchor='middle' font-family='Verdana, Trebuchet MS, sans-serif' font-size='64' fill='%23e9f1ff'>Happy 24th, Dalton</text></svg>">
-      <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 100 100%27%3E%3Ctext y=%27.9em%27 font-size=%2790%27%3E🎂%3C/text%3E%3C/svg%3E">
-      <link rel="preconnect" href="https://fonts.googleapis.com">
-      <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&family=Rajdhani:wght@500;700&display=swap" rel="stylesheet">
-      <style>
-         :root{
-         --bg:#0b0f14;
-         --neon:#00f7ff;      /* Edgerunners cyan */
-         --magenta:#ff2bd6;   /* Edgerunners magenta */
-         --yellow:#fcee09;    /* Cyberpunk yellow */
-         --world-speed:1;
-         }
-         *{box-sizing:border-box}
-         html,body{height:100%}
-         body{
-         margin:0; background:#0b0f14; color:#e9f1ff;
-         font-family:'Rajdhani', system-ui, sans-serif;
-         display:grid; place-items:center;
-         }
-         .wrap{ width:100%; padding:24px; }
-         .card{
-         width:min(820px,92vw); border:1px solid rgba(0,247,255,.35);
-         border-radius:22px; padding:28px 28px 22px;
-         background: linear-gradient(180deg, rgba(0,247,255,.06), rgba(255,43,214,.06));
-         box-shadow: 0 0 .6rem var(--neon), inset 0 0 .4rem rgba(0,247,255,.25);
-         margin:auto; position:relative; overflow:hidden;
-         }
-         .header{ display:flex; justify-content:space-between; align-items:center; gap:12px; flex-wrap:wrap }
-         .badge{
-         font-family:'Orbitron', sans-serif; letter-spacing:.12em; font-weight:700; color:#0b0f14;
-         padding:8px 12px; border-radius:999px;
-         background:linear-gradient(90deg,var(--yellow),var(--neon));
-         box-shadow:0 0 .6rem var(--yellow);
-         text-shadow: 0 0 6px #00e676; /* Dalton green glow */
-         }
-         .controls{ display:flex; gap:8px; align-items:center }
-         .sandevistan-btn{
-         --c:var(--neon);
-         border:2px solid var(--c); color:var(--c); background:transparent;
-         padding:10px 16px; border-radius:12px; cursor:pointer; letter-spacing:.08em;
-         font-family:'Orbitron', sans-serif; font-weight:700; text-transform:uppercase;
-         }
-         .audio-toggle{
-         border:1px solid rgba(255,255,255,.25);
-         background: rgba(0,0,0,.25);
-         color:#e9f1ff;
-         font-size:16px;
-         padding:8px 10px;
-         border-radius:10px;
-         cursor:pointer;
-         transition:transform .12s ease, box-shadow .12s ease;
-         }
-         .audio-toggle:hover{ transform: translateY(-1px) }
-         .audio-toggle[aria-pressed="true"]{
-         background: linear-gradient(90deg, var(--yellow), var(--neon));
-         color:#00161a;
-         box-shadow: 0 0 .6rem rgba(0,247,255,.5);
-         }
-         .title{
-         font-family:'Orbitron', sans-serif; font-size:clamp(28px,5vw,46px);
-         margin:14px 0 6px; text-shadow:0 0 10px rgba(0,247,255,.6);
-         }
-         .subtitle{ opacity:.9; margin:0 0 12px }
-         .panel{
-         border:1px solid rgba(255,43,214,.35); border-radius:16px; padding:16px;
-         background: linear-gradient(180deg, rgba(255,43,214,.12), rgba(0,247,255,.08));
-         }
-         /* Ambient grid + scanlines */
-         .grid{
-         position:fixed; inset:0; pointer-events:none; opacity:.25;
-         background:
-         linear-gradient(transparent 95%, rgba(0,247,255,.15) 95%) 0 0/100% 24px,
-         linear-gradient(90deg, transparent 95%, rgba(0,247,255,.15) 95%) 0 0/24px 100%;
-         filter:drop-shadow(0 0 2px rgba(0,247,255,.5));
-         animation: drift 18s linear infinite;
-         }
-         @keyframes drift{ to{ transform: translate(24px,24px) } }
-         .scan{
-         position:fixed; inset:0; pointer-events:none; opacity:.5;
-         background: repeating-linear-gradient(to bottom, transparent 0 2px, rgba(255,255,255,.03) 2px 3px);
-         mix-blend-mode: overlay; animation: scan 6s linear infinite;
-         }
-         @keyframes scan{ to{ background-position: 0 100vh } }
-         /* Glitch + active state */
-         .glitch{
-         position:relative; display:inline-block; font-weight:700;
-         text-shadow: 1px 0 var(--magenta), -1px 0 var(--neon);
-         animation: glitch 1.6s calc(var(--world-speed) * 1s) infinite alternate;
-         }
-         @keyframes glitch{
-         0%,40%,60%,100%{ transform: translate(0,0) }
-         41%{ transform: translate(1px,-1px) }
-         42%{ transform: translate(-1px,1px) }
-         61%{ transform: translate(1px,0) skewX(8deg) }
-         }
-         .active .card{
-         box-shadow: 0 0 1.2rem var(--neon), 0 0 2.0rem var(--magenta), inset 0 0 .8rem rgba(0,247,255,.35);
-         }
-         .active .sandevistan-btn{
-         background:var(--neon); color:#00161a; box-shadow: 0 0 1rem rgba(0,247,255,.9)
-         }
-         /* Footer */
-         .footer{ display:flex; justify-content:space-between; align-items:center; gap:10px; margin-top:16px; opacity:.9; font-size:14px }
-         .chip{
-         border:1px solid rgba(255,255,255,.2); padding:6px 10px; border-radius:999px; font-family:'Orbitron'; letter-spacing:.1em;
-         background: rgba(0,0,0,.25);
-         }
-         /* a11y helper */
-         .sr-only{
-         position:absolute; left:-9999px; top:auto; width:1px; height:1px; overflow:hidden;
-         }
-      </style>
-   </head>
-   <body>
-      <div class="grid"></div>
-      <div class="scan"></div>
-      <div class="wrap">
-         <div class="card" id="card">
-            <div class="header">
-               <div class="badge">DALTON // AGE: 24</div>
-               <div class="controls">
-                  <button class="sandevistan-btn" id="toggle">Activate Sandevistan</button>
-                  <button class="audio-toggle" id="audioToggle" aria-pressed="false" aria-label="Toggle ambient audio">🔊</button>
-               </div>
-            </div>
-            <h1 class="title">Happy 24th, <span class="glitch">Dalton</span> 🎉</h1>
-            <h2 class="sr-only">Edgerunners-themed birthday card</h2>
-            <p class="subtitle">“Choom, time slows down when I’m with you.”</p>
-            <div class="strip" role="status" aria-live="polite" style="
-               display:flex; justify-content:space-between; align-items:center; gap:10px;
-               border:1px solid rgba(0,247,255,.25); border-radius:14px; padding:10px 12px; margin:16px 0 18px;
-               background: rgba(0,0,0,.25);
-               ">
-               <span style="font-family:'Orbitron',sans-serif; letter-spacing:.12em; font-weight:700; color:var(--neon)">COUNTDOWN</span>
-               <div id="timer" style="font-family:'Orbitron',sans-serif; font-size:clamp(22px,4.5vw,34px); letter-spacing:.06em; text-shadow:0 0 10px rgba(0,247,255,.6); min-width:210px; text-align:right;">00:00:24</div>
-            </div>
-            <div class="panel" id="msg">
-               <p>Boot sequence ready. Effects coming online…</p>
-            </div>
-            <div class="footer">
-               <div class="chip">BUILD: EDGERUNNERS-HBD</div>
-               <div class="chip" id="state">STATE: STANDBY</div>
-            </div>
-         </div>
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Dalton — Birthday Card</title>
+
+<meta name="description" content="Activate Sandevistan and celebrate Dalton's 24th in neon Edgerunners style.">
+<meta name="theme-color" content="#fcee09"><!-- Cyberpunk yellow -->
+<meta property="og:title" content="Happy 24th, Dalton — Sandevistan Card">
+<meta property="og:description" content="Choom, time slows down when I’m with you.">
+<meta property="og:type" content="website">
+<meta property="og:image" content="data:image/svg+xml;utf8,<?xml version='1.0' encoding='UTF-8'?><svg xmlns='http://www.w3.org/2000/svg' width='1200' height='630'><rect width='1200' height='630' fill='%230b0f14'/><rect x='40' y='40' width='1120' height='550' rx='28' ry='28' fill='none' stroke='%23fcee09' stroke-width='6'/><text x='600' y='320' text-anchor='middle' font-family='Verdana, Trebuchet MS, sans-serif' font-size='64' fill='%23e9f1ff'>Happy 24th, Dalton</text></svg>">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 100 100%27%3E%3Ctext y=%27.9em%27 font-size=%2790%27%3E🎂%3C/text%3E%3C/svg%3E">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&family=Rajdhani:wght@500;700&display=swap" rel="stylesheet">
+
+<style>
+  :root{
+    --bg:#0b0f14;
+    --neon:#00f7ff;      /* Edgerunners cyan */
+    --magenta:#ff2bd6;   /* Edgerunners magenta */
+    --yellow:#fcee09;    /* Cyberpunk yellow */
+    --world-speed:1;
+  }
+  *{box-sizing:border-box}
+  html,body{height:100%}
+  body{
+    margin:0; background:#0b0f14; color:#e9f1ff;
+    font-family:'Rajdhani', system-ui, sans-serif;
+    display:grid; place-items:center;
+  }
+  .wrap{ width:100%; padding:24px; }
+  .card{
+    width:min(820px,92vw); border:1px solid rgba(0,247,255,.35);
+    border-radius:22px; padding:28px 28px 22px;
+    background: linear-gradient(180deg, rgba(0,247,255,.06), rgba(255,43,214,.06));
+    box-shadow: 0 0 .6rem var(--neon), inset 0 0 .4rem rgba(0,247,255,.25);
+    margin:auto; position:relative; overflow:hidden;
+  }
+  .header{ display:flex; justify-content:space-between; align-items:center; gap:12px; flex-wrap:wrap }
+  .badge{
+    font-family:'Orbitron', sans-serif; letter-spacing:.12em; font-weight:700; color:#0b0f14;
+    padding:8px 12px; border-radius:999px;
+    background:linear-gradient(90deg,var(--yellow),var(--neon));
+    box-shadow:0 0 .6rem var(--yellow);
+    text-shadow: 0 0 6px #00e676; /* Dalton green glow */
+  }
+  .controls{ display:flex; gap:8px; align-items:center }
+  .sandevistan-btn{
+    --c:var(--neon);
+    border:2px solid var(--c); color:var(--c); background:transparent;
+    padding:10px 16px; border-radius:12px; cursor:pointer; letter-spacing:.08em;
+    font-family:'Orbitron', sans-serif; font-weight:700; text-transform:uppercase;
+  }
+  .audio-toggle{
+    border:1px solid rgba(255,255,255,.25);
+    background: rgba(0,0,0,.25);
+    color:#e9f1ff;
+    font-size:16px;
+    padding:8px 10px;
+    border-radius:10px;
+    cursor:pointer;
+    transition:transform .12s ease, box-shadow .12s ease;
+  }
+  .audio-toggle:hover{ transform: translateY(-1px) }
+  .audio-toggle[aria-pressed="true"]{
+    background: linear-gradient(90deg, var(--yellow), var(--neon));
+    color:#00161a;
+    box-shadow: 0 0 .6rem rgba(0,247,255,.5);
+  }
+  .title{
+    font-family:'Orbitron', sans-serif; font-size:clamp(28px,5vw,46px);
+    margin:14px 0 6px; text-shadow:0 0 10px rgba(0,247,255,.6);
+  }
+  .subtitle{ opacity:.9; margin:0 0 12px }
+  .panel{
+    border:1px solid rgba(255,43,214,.35); border-radius:16px; padding:16px;
+    background: linear-gradient(180deg, rgba(255,43,214,.12), rgba(0,247,255,.08));
+  }
+
+  /* Ambient grid + scanlines */
+  .grid{
+    position:fixed; inset:0; pointer-events:none; opacity:.25;
+    background:
+      linear-gradient(transparent 95%, rgba(0,247,255,.15) 95%) 0 0/100% 24px,
+      linear-gradient(90deg, transparent 95%, rgba(0,247,255,.15) 95%) 0 0/24px 100%;
+    filter:drop-shadow(0 0 2px rgba(0,247,255,.5));
+    animation: drift 18s linear infinite;
+  }
+  @keyframes drift{ to{ transform: translate(24px,24px) } }
+  .scan{
+    position:fixed; inset:0; pointer-events:none; opacity:.5;
+    background: repeating-linear-gradient(to bottom, transparent 0 2px, rgba(255,255,255,.03) 2px 3px);
+    mix-blend-mode: overlay; animation: scan 6s linear infinite;
+  }
+  @keyframes scan{ to{ background-position: 0 100vh } }
+
+  /* Glitch + active state */
+  .glitch{
+    position:relative; display:inline-block; font-weight:700;
+    text-shadow: 1px 0 var(--magenta), -1px 0 var(--neon);
+    animation: glitch 1.6s calc(var(--world-speed) * 1s) infinite alternate;
+  }
+  @keyframes glitch{
+    0%,40%,60%,100%{ transform: translate(0,0) }
+    41%{ transform: translate(1px,-1px) }
+    42%{ transform: translate(-1px,1px) }
+    61%{ transform: translate(1px,0) skewX(8deg) }
+  }
+  .active .card{
+    box-shadow: 0 0 1.2rem var(--neon), 0 0 2.0rem var(--magenta), inset 0 0 .8rem rgba(0,247,255,.35);
+  }
+  .active .sandevistan-btn{
+    background:var(--neon); color:#00161a; box-shadow: 0 0 1rem rgba(0,247,255,.9)
+  }
+
+  /* Footer */
+  .footer{ display:flex; justify-content:space-between; align-items:center; gap:10px; margin-top:16px; opacity:.9; font-size:14px }
+  .chip{
+    border:1px solid rgba(255,255,255,.2); padding:6px 10px; border-radius:999px; font-family:'Orbitron'; letter-spacing:.1em;
+    background: rgba(0,0,0,.25);
+  }
+
+  /* a11y helper */
+  .sr-only{
+    position:absolute; left:-9999px; top:auto; width:1px; height:1px; overflow:hidden;
+  }
+</style>
+</head>
+<body>
+  <div class="grid"></div>
+  <div class="scan"></div>
+
+  <div class="wrap">
+    <div class="card" id="card">
+      <div class="header">
+        <div class="badge">DALTON // AGE: 24</div>
+        <div class="controls">
+          <button class="sandevistan-btn" id="toggle">Activate Sandevistan</button>
+          <button class="audio-toggle" id="audioToggle" aria-pressed="false" aria-label="Toggle ambient audio">🔊</button>
+        </div>
       </div>
-      <script>
-         const timerEl = document.getElementById('timer');
-         let remaining = 24 * 1000; // 24 seconds
-         
-         function format(ms){
-           ms = Math.max(0, ms);
-           const total= Math.floor(ms/1000);
-           const mm = String(Math.floor(total/60)).padStart(2,'0');
-           const ss = String(total%60).padStart(2,'0');
-           const cs = String(Math.floor((ms%1000)/10)).padStart(2,'0');
-           return `${mm}:${ss}:${cs}`;
-         }
-         
-         let last = performance.now();
-         function tick(now){
-           const dt = now - last; last = now;
-           remaining -= dt;
-           timerEl.textContent = format(remaining);
-           requestAnimationFrame(tick);
-         }
-         requestAnimationFrame((t)=>{ last=t; tick(t); });
-      </script>
-      <script>
-         const toggleBtn = document.getElementById('toggle');
-         let active = false;
-         
-         toggleBtn.addEventListener('click', ()=>{
-           active = !active;
-           document.documentElement.style.setProperty('--world-speed', active ? 2.2 : 1);
-           document.body.classList.toggle('active', active);
-           toggleBtn.textContent = active ? 'Deactivate Sandevistan' : 'Activate Sandevistan';
-         });
-         // --- "cyber hum" (Audio) ---
-         let audioCtx, humGain, humStarted = false;
-         
-         function initHum(){
-         if (humStarted) return;
-         humStarted = true;
-         
-         audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-         
-         // Two slightly detuned oscillators for a warm, sci-fi bed
-         const osc1 = audioCtx.createOscillator();
-         const osc2 = audioCtx.createOscillator();
-         osc1.type = 'sawtooth';  osc2.type = 'sine';
-         osc1.frequency.value = 56;      // base Hz
-         osc2.frequency.value = 112;     // octave up
-         osc2.detune.value = 6;          // slight detune
-         
-         // Gentle low-pass to round it off
-         const lpf = audioCtx.createBiquadFilter();
-         lpf.type = 'lowpass';
-         lpf.frequency.value = 420;
-         
-         // Slow LFO to subtly move the filter (adds life)
-         const lfo = audioCtx.createOscillator();
-         const lfoGain = audioCtx.createGain();
-         lfo.frequency.value = 0.12;
-         lfoGain.gain.value = 60; // how much the filter moves
-         lfo.connect(lfoGain).connect(lpf.frequency);
-         lfo.start();
-         
-         // Master gain (very quiet by default)
-         humGain = audioCtx.createGain();
-         const saved = localStorage.getItem('humMuted') === 'true';
-         humGain.gain.value = saved ? 0 : 0.045;  // ~-26 dB
-         
-         // Wire up
-         osc1.connect(lpf);
-         osc2.connect(lpf);
-         lpf.connect(humGain).connect(audioCtx.destination);
-         
-         osc1.start();
-         osc2.start();
-         }
-         
-         function setHumMuted(muted){
-         if (!humGain) return;
-         humGain.gain.setTargetAtTime(muted ? 0 : 0.045, audioCtx.currentTime, 0.02);
-         localStorage.setItem('humMuted', String(muted));
-         const btn = document.getElementById('audioToggle');
-         if (btn){
-         btn.setAttribute('aria-pressed', String(!muted));
-         btn.textContent = muted ? '🔇' : '🔊';
-         }
-         }
-         
-         // Hook up the UI button
-         const audioToggleBtn = document.getElementById('audioToggle');
-         if (audioToggleBtn){
-         // reflect saved state on load
-         const savedMuted = localStorage.getItem('humMuted') === 'true';
-         audioToggleBtn.setAttribute('aria-pressed', String(!savedMuted));
-         audioToggleBtn.textContent = savedMuted ? '🔇' : '🔊';
-         
-         audioToggleBtn.addEventListener('click', async ()=>{
-         if (!audioCtx) initHum();
-         if (audioCtx.state === 'suspended') await audioCtx.resume();
-         const muted = humGain.gain.value > 0 ? true : false;
-         setHumMuted(muted);
-         });
-         }
-         
-         // Start hum the first time user hits Sandevistan
-         toggleBtn.addEventListener('click', async ()=>{
-         if (!audioCtx) initHum();
-         if (audioCtx.state === 'suspended') await audioCtx.resume();
-         });
-         
-      </script>
-      <script>
-         // Confetti for Dalton green (#00e676), with Edgerunners cyan/magenta/yellow
-         function confetti(){
-           const n = 90;
-           for(let i=0;i<n;i++){
-             const p = document.createElement('div');
-             p.style.position='fixed';
-             p.style.left = (Math.random()*100)+'vw';
-             p.style.top  = '-8px';
-             p.style.width = '6px';
-             p.style.height= '10px';
-             p.style.background = (['#00e676','#00e676','#00f7ff','#ff2bd6','#fcee09','#00e676'])[i%6];
-             p.style.transform = `rotate(${Math.random()*180}deg)`;
-             p.style.opacity = '0.9';
-             p.style.zIndex = 9999;
-             p.style.pointerEvents = 'none';
-             document.body.appendChild(p);
-             const duration = 1200 + Math.random()*1200;
-             p.animate([
-               { transform:`translateY(0) rotate(0deg)`, opacity:1 },
-               { transform:`translateY(100vh) rotate(${120+Math.random()*120}deg)`, opacity:0.9 }
-             ], { duration, easing:'cubic-bezier(.2,.8,.2,1)' }).onfinish = ()=> p.remove();
-           }
-         }
-         
-         function tick(now){
-         const dt = now - last; 
-         last = now;
-         
-         // Decrease time (slower if Sandevistan is active)
-         remaining -= active ? dt * 0.35 : dt;
-         
-         // Clamp to zero and update display
-         if (remaining < 0) remaining = 0;
-         timerEl.textContent = format(remaining);
-         
-         //  Fire confetti when timer hits zero
-         if (remaining === 0 && !window.__confettiFired) {
-         window.__confettiFired = true;
-         stateEl.textContent = 'STATE: PARTY MODE';
-         toggleBtn.disabled = true;
-         toggleBtn.textContent = '🎂 Complete';
-         confetti();
-         
-         setHumMuted(true); // fade the hum out when party mode triggers
-         }
-      </script>
-   </body>
+
+      <h1 class="title">Happy 24th, <span class="glitch">Dalton</span> 🎉</h1>
+      <h2 class="sr-only">Edgerunners-themed birthday card</h2>
+      <p class="subtitle">“Choom, time slows down when I’m with you.”</p>
+
+      <div class="strip" role="status" aria-live="polite" style="
+        display:flex; justify-content:space-between; align-items:center; gap:10px;
+        border:1px solid rgba(0,247,255,.25); border-radius:14px; padding:10px 12px; margin:16px 0 18px;
+        background: rgba(0,0,0,.25);
+      ">
+        <span style="font-family:'Orbitron',sans-serif; letter-spacing:.12em; font-weight:700; color:var(--neon)">COUNTDOWN</span>
+        <div id="timer" style="font-family:'Orbitron',sans-serif; font-size:clamp(22px,4.5vw,34px); letter-spacing:.06em; text-shadow:0 0 10px rgba(0,247,255,.6); min-width:210px; text-align:right;">00:00:24</div>
+      </div>
+
+      <div class="panel" id="msg">
+        <p>Boot sequence ready. Effects coming online…</p>
+      </div>
+
+      <div class="footer">
+        <div class="chip">BUILD: EDGERUNNERS-HBD</div>
+        <div class="chip" id="state">STATE: STANDBY</div>
+      </div>
+    </div>
+  </div>
+
+<script>
+  // --- Timer/display state
+  const timerEl  = document.getElementById('timer');
+  const toggleBtn= document.getElementById('toggle');
+  const stateEl  = document.getElementById('state');
+
+  let active = false;
+  let remaining = 24 * 1000; // 24 seconds
+  let last = performance.now();
+
+  function format(ms){
+    ms = Math.max(0, ms);
+    const total= Math.floor(ms/1000);
+    const mm = String(Math.floor(total/60)).padStart(2,'0');
+    const ss = String(total%60).padStart(2,'0');
+    const cs = String(Math.floor((ms%1000)/10)).padStart(2,'0');
+    return `${mm}:${ss}:${cs}`;
+  }
+
+  // --- Ambient "cyber hum" (Web Audio)
+  let audioCtx, humGain, humStarted = false;
+
+  function initHum(){
+    if (humStarted) return;
+    humStarted = true;
+
+    audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+
+    const osc1 = audioCtx.createOscillator();
+    const osc2 = audioCtx.createOscillator();
+    osc1.type = 'sawtooth';  osc2.type = 'sine';
+    osc1.frequency.value = 56;
+    osc2.frequency.value = 112;
+    osc2.detune.value = 6;
+
+    const lpf = audioCtx.createBiquadFilter();
+    lpf.type = 'lowpass';
+    lpf.frequency.value = 420;
+
+    const lfo = audioCtx.createOscillator();
+    const lfoGain = audioCtx.createGain();
+    lfo.frequency.value = 0.12;
+    lfoGain.gain.value = 60;
+    lfo.connect(lfoGain).connect(lpf.frequency);
+    lfo.start();
+
+    humGain = audioCtx.createGain();
+    const saved = localStorage.getItem('humMuted') === 'true';
+    humGain.gain.value = saved ? 0 : 0.045;
+
+    osc1.connect(lpf);
+    osc2.connect(lpf);
+    lpf.connect(humGain).connect(audioCtx.destination);
+
+    osc1.start();
+    osc2.start();
+  }
+
+  function setHumMuted(muted){
+    if (!humGain) return;
+    humGain.gain.setTargetAtTime(muted ? 0 : 0.045, audioCtx.currentTime, 0.02);
+    localStorage.setItem('humMuted', String(muted));
+    const btn = document.getElementById('audioToggle');
+    if (btn){
+      btn.setAttribute('aria-pressed', String(!muted));
+      btn.textContent = muted ? '🔇' : '🔊';
+    }
+  }
+
+  // Audio toggle UI
+  const audioToggleBtn = document.getElementById('audioToggle');
+  if (audioToggleBtn){
+    const savedMuted = localStorage.getItem('humMuted') === 'true';
+    audioToggleBtn.setAttribute('aria-pressed', String(!savedMuted));
+    audioToggleBtn.textContent = savedMuted ? '🔇' : '🔊';
+
+    audioToggleBtn.addEventListener('click', async ()=>{
+      if (!audioCtx) initHum();
+      if (audioCtx.state === 'suspended') await audioCtx.resume();
+      const muted = humGain.gain.value > 0 ? true : false;
+      setHumMuted(muted);
+    });
+  }
+
+  // Start hum on first interaction
+  toggleBtn.addEventListener('click', async ()=>{
+    active = !active;
+    document.documentElement.style.setProperty('--world-speed', active ? 2.2 : 1);
+    document.body.classList.toggle('active', active);
+    toggleBtn.textContent = active ? 'Deactivate Sandevistan' : 'Activate Sandevistan';
+
+    if (!audioCtx) initHum();
+    if (audioCtx.state === 'suspended') await audioCtx.resume();
+  });
+
+  // --- Confetti
+  function confetti(){
+    const n = 90;
+    for(let i=0;i<n;i++){
+      const p = document.createElement('div');
+      p.style.position='fixed';
+      p.style.left = (Math.random()*100)+'vw';
+      p.style.top  = '-8px';
+      p.style.width = '6px';
+      p.style.height= '10px';
+      p.style.background = (['#00e676','#00e676','#00f7ff','#ff2bd6','#fcee09','#00e676'])[i%6];
+      p.style.transform = `rotate(${Math.random()*180}deg)`;
+      p.style.opacity = '0.9';
+      p.style.zIndex = 9999;
+      p.style.pointerEvents = 'none';
+      document.body.appendChild(p);
+      const duration = 1200 + Math.random()*1200;
+      p.animate([
+        { transform:`translateY(0) rotate(0deg)`, opacity:1 },
+        { transform:`translateY(100vh) rotate(${120+Math.random()*120}deg)`, opacity:0.9 }
+      ], { duration, easing:'cubic-bezier(.2,.8,.2,1)' }).onfinish = ()=> p.remove();
+    }
+  }
+
+  // --- Unified tick (with party mode + audio fade)
+  function tick(now){
+    const dt = now - last; 
+    last = now;
+
+    // Decrease time (slower if Sandevistan is active)
+    remaining -= active ? dt * 0.35 : dt;
+
+    // Clamp + update
+    if (remaining < 0) remaining = 0;
+    timerEl.textContent = format(remaining);
+
+    // Party mode once
+    if (remaining === 0 && !window.__confettiFired){
+      window.__confettiFired = true;
+      if (stateEl) stateEl.textContent = 'STATE: PARTY MODE';
+      toggleBtn.disabled = true;
+      toggleBtn.textContent = '🎂 Complete';
+      confetti();
+      setHumMuted(true); // fade the hum out when party mode triggers
+    }
+
+    requestAnimationFrame(tick);
+  }
+
+  requestAnimationFrame((t)=>{ last=t; tick(t); });
+</script>
+</body>
 </html>
