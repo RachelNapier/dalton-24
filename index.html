@@ -79,10 +79,41 @@
             </div>
             <h1 class="title">Happy 24th, Dalton 🎉</h1>
             <p class="subtitle">“Choom, time slows down when I’m with you.”</p>
+            <div class="strip" role="status" aria-live="polite" style="
+  display:flex; justify-content:space-between; align-items:center; gap:10px;
+  border:1px solid rgba(0,247,255,.25); border-radius:14px; padding:10px 12px; margin:16px 0 18px;
+  background: rgba(0,0,0,.25);
+">
+  <span style="font-family:'Orbitron',sans-serif; letter-spacing:.12em; font-weight:700; color:var(--neon)">COUNTDOWN</span>
+  <div id="timer" style="font-family:'Orbitron',sans-serif; font-size:clamp(22px,4.5vw,34px); letter-spacing:.06em; text-shadow:0 0 10px rgba(0,247,255,.6); min-width:210px; text-align:right;">00:00:24</div>
+</div>
+
             <div class="panel">
                <p>Boot sequence ready. Effects coming online…</p>
             </div>
          </div>
       </div>
+      <script>
+  const timerEl = document.getElementById('timer');
+  let remaining = 24 * 1000; // 24 seconds
+
+  function format(ms){
+    ms = Math.max(0, ms);
+    const total= Math.floor(ms/1000);
+    const mm = String(Math.floor(total/60)).padStart(2,'0');
+    const ss = String(total%60).padStart(2,'0');
+    const cs = String(Math.floor((ms%1000)/10)).padStart(2,'0');
+    return `${mm}:${ss}:${cs}`;
+  }
+
+  let last = performance.now();
+  function tick(now){
+    const dt = now - last; last = now;
+    remaining -= dt;
+    timerEl.textContent = format(remaining);
+    requestAnimationFrame(tick);
+  }
+  requestAnimationFrame((t)=>{ last=t; tick(t); });
+</script>
    </body>
 </html>
