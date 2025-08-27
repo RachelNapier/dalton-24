@@ -1,242 +1,254 @@
 <!doctype html>
 <html lang="en">
-   <head>
-      <meta charset="utf-8" />
-      <meta name="viewport" content="width=device-width, initial-scale=1" />
-      <title>Happy Birthday, Dalton</title>
-      <meta name="description" content="CyberPunk Edgerunners-inspired birthday card for Dalton">
-      <meta name="theme-color" content="#ff9a5a">
-      <!-- warm sunset chrome -->
-      <meta property="og:title" content="Happy Birthday, Dalton">
-      <meta property="og:description" content="A little Night City sunset for your day.">
-      <meta property="og:type" content="website">
-      <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 100 100%27%3E%3Ctext y=%27.9em%27 font-size=%2790%27%3E🌇%3C/text%3E%3C/svg%3E">
-      <link rel="preconnect" href="https://fonts.googleapis.com">
-      <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;700&family=Inter:wght@400;600&display=swap" rel="stylesheet">
-      <style>
-         :root{
-         /* Edgerunners theme: sunset orange + rose + violet on ink */
-         --ink:#0a0a12;
-         --sunset:#ff9a5a;   /* warm orange */
-         --rose:#ff6b9e;     /* pink/rose */
-         --violet:#7a5cff;   /* moody violet */
-         --glass: rgba(255,255,255,.06);
-         --line : rgba(255,255,255,.18);
-         --world-speed:1;
-         }
-         *{box-sizing:border-box}
-         html,body{height:100%}
-         body{
-         margin:0; color:#f7f7fb; font-family:'Inter', system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
-         /* sunset wash + vignette */
-         background:
-         radial-gradient(1200px 600px at 70% -10%, rgba(122,92,255,.28), transparent 60%),
-         radial-gradient(900px 520px at 20% 110%, rgba(255,107,158,.22), transparent 60%),
-         linear-gradient(180deg, #13131d 0%, #0a0a12 60%);
-         display:grid; place-items:center; overflow:hidden;
-         }
-         .wrap{ width:100%; padding:24px }
-         .card{
-         width:min(820px, 92vw);
-         border:1px solid var(--line);
-         border-radius:22px;
-         padding:28px 28px 20px;
-         background: linear-gradient(180deg, var(--glass), rgba(122,92,255,.08));
-         box-shadow: 0 10px 40px rgba(0,0,0,.5);
-         position:relative; overflow:hidden; margin:auto;
-         }
-         /* gentle horizon light */
-         .glow{
-         position:absolute; inset:-10%;
-         background:
-         radial-gradient(900px 260px at 50% 0%, rgba(255,154,90,.25), transparent 70%),
-         radial-gradient(700px 220px at 70% 10%, rgba(255,107,158,.18), transparent 70%);
-         pointer-events:none; filter: blur(1px);
-         }
-         .header{ display:flex; justify-content:space-between; align-items:center; gap:12px; flex-wrap:wrap }
-         /* Edgerunners logo diagonal slash accent */
-         .slash{
-         position:absolute;
-         top:52px; left:-6%;
-         width:120%; height:10px;
-         background: linear-gradient(90deg, #9eff00, #c7ff66);
-         transform: rotate(-6deg);
-         box-shadow: 0 0 18px rgba(158,255,0,.45);
-         opacity:0.9;
-         }
-         @media (max-width:560px){
-         .slash{ top:66px; }
-         }
-         .controls{ display:flex; gap:8px; align-items:center }
-         .edge-btn{
-         border:2px solid var(--sunset); color:var(--sunset); background:transparent;
-         padding:10px 16px; border-radius:12px; cursor:pointer; letter-spacing:.06em;
-         font-family:'Poppins', sans-serif; font-weight:700; text-transform:uppercase;
-         transition: transform .12s ease, box-shadow .12s ease, color .12s ease, background .12s ease;
-         }
-         .edge-btn:hover{ transform: translateY(-1px) }
-         .active .edge-btn{ background:var(--sunset); color:#1b130f; box-shadow: 0 0 .8rem rgba(255,154,90,.65) }
-         .title{
-         font-family:'Poppins', sans-serif; font-weight:700;
-         font-size:clamp(28px, 5vw, 44px);
-         margin:18px 0 6px;
-         text-shadow: 0 0 18px rgba(255,154,90,.45);
-         }
-         .subtitle{ opacity:.92; margin:0 0 14px; font-size:clamp(16px, 2.6vw, 18px) }
-         .strip{
-         display:flex; justify-content:space-between; align-items:center; gap:10px;
-         border:1px solid var(--line); border-radius:14px; padding:10px 12px; margin:16px 0 18px;
-         background: rgba(0,0,0,.25);
-         }
-         .tag{ font-family:'Poppins', sans-serif; letter-spacing:.12em; font-weight:700; color:var(--rose) }
-         .timer{
-         font-family:'Poppins', sans-serif; font-size: clamp(22px, 4.5vw, 34px); letter-spacing:.06em;
-         text-shadow:0 0 10px rgba(122,92,255,.5);
-         min-width: 210px; text-align:right;
-         }
-         .panel{
-         border:1px solid var(--line); border-radius:16px; padding:16px;
-         background: linear-gradient(180deg, rgba(122,92,255,.12), rgba(255,107,158,.10));
-         }
-         .panel p{ margin:10px 0 0; font-size: clamp(16px, 2.8vw, 18px); }
-         /* softer anime style glow on name */
-         .glitch{
-         position:relative; display:inline-block; font-weight:700;
-         text-shadow: 0 0 10px rgba(255,107,158,.55), 0 0 20px rgba(122,92,255,.45);
-         }
-         .footer{ display:flex; flex-wrap:wrap; gap:10px; align-items:center; justify-content:space-between; margin-top:16px; opacity:.95; font-size:14px }
-         .chip{
-         border:1px solid var(--line); padding:6px 10px; border-radius:999px; font-family:'Poppins'; letter-spacing:.06em;
-         background: rgba(0,0,0,.25);
-         }
-         .sr-only{
-         position:absolute; left:-9999px; top:auto; width:1px; height:1px; overflow:hidden;
-         }
-      </style>
-   </head>
-   <body>
-      <div class="wrap">
-         <div class="card" id="card">
-            <div class="glow"></div>
-            <div class="header">
-               <div class="slash" aria-hidden="true"></div>
-               <div class="controls">
-                  <button class="edge-btn" id="toggle">Start Countdown</button>
-               </div>
-            </div>
-            <h1 class="title">Happy Birthday, <span class="glitch">Dalton</span> 🌇</h1>
-            <h2 class="sr-only">────⋆⋅☆⋅⋆────</h2>
-            <p class="subtitle">“In Night City, this moment is ours.”</p>
-            <div class="strip" role="status" aria-live="polite">
-               <span class="tag">COUNTDOWN</span>
-               <div class="timer" id="timer">00:00:24</div>
-            </div>
-            <div class="panel" id="msg">
-               <p>
-                  Systems ready. When you’re ready, hit <strong>Activate</strong>.
-                  When the timer reaches zero, look up—there’s a little Night City surprise.
-               </p>
-               <p style="margin-top:10px; opacity:.92"><em>♡✧˚Love, Rachel⋆｡♡˚</em></p>
-            </div>
-            <div class="footer">
-               <div class="chip">Night City // 24</div>
-               <div class="chip" id="state">COUNTDOWN READY</div>
-            </div>
-            <!-- Theme song -->
-            <audio id="edgerunnersTheme" preload="auto">
-               <source src="assets/edgerunners-theme.mp3" type="audio/mpeg">
-            </audio>
-         </div>
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Happy Birthday, Dalton</title>
+
+<meta name="description" content="*Cyberpunk: Edgerunners*–inspired birthday card for Dalton.">
+<meta name="theme-color" content="#ff9a5a"><!-- warm sunset chrome -->
+<meta property="og:title" content="Happy Birthday, Dalton">
+<meta property="og:description" content="A little Night City sunset for your day.">
+<meta property="og:type" content="website">
+
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 100 100%27%3E%3Ctext y=%27.9em%27 font-size=%2790%27%3E🌇%3C/text%3E%3C/svg%3E">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;700&family=Inter:wght@400;600&display=swap" rel="stylesheet">
+
+<style>
+  :root{
+    /* Edgerunners theme: sunset orange + rose + violet on ink */
+    --ink:#0a0a12;
+    --sunset:#ff9a5a;   /* warm orange */
+    --rose:#ff6b9e;     /* pink/rose */
+    --violet:#7a5cff;   /* moody violet */
+    --glass: rgba(255,255,255,.06);
+    --line : rgba(255,255,255,.18);
+    --world-speed:1;
+  }
+
+  *{box-sizing:border-box}
+  html,body{height:100%}
+  body{
+    margin:0; color:#f7f7fb; font-family:'Inter', system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+    /* sunset wash + vignette */
+    background:
+      radial-gradient(1200px 600px at 70% -10%, rgba(122,92,255,.28), transparent 60%),
+      radial-gradient(900px 520px at 20% 110%, rgba(255,107,158,.22), transparent 60%),
+      linear-gradient(180deg, #13131d 0%, #0a0a12 60%);
+    display:grid; place-items:center; overflow:hidden;
+  }
+
+  .wrap{ width:100%; padding:24px }
+  .card{
+    width:min(820px, 92vw);
+    border:1px solid var(--line);
+    border-radius:22px;
+    padding:28px 28px 20px;
+    background: linear-gradient(180deg, var(--glass), rgba(122,92,255,.08));
+    box-shadow: 0 10px 40px rgba(0,0,0,.5);
+    position:relative; overflow:hidden; margin:auto;
+  }
+
+  /* gentle horizon light */
+  .glow{
+    position:absolute; inset:-10%;
+    background:
+      radial-gradient(900px 260px at 50% 0%, rgba(255,154,90,.25), transparent 70%),
+      radial-gradient(700px 220px at 70% 10%, rgba(255,107,158,.18), transparent 70%);
+    pointer-events:none; filter: blur(1px);
+  }
+
+  .header{ display:flex; justify-content:space-between; align-items:center; gap:12px; flex-wrap:wrap }
+
+  /* Edgerunners logo diagonal slash accent */
+  .slash{
+    position:absolute;
+    top:52px; left:-6%;
+    width:120%; height:10px;
+    background: linear-gradient(90deg, #9eff00, #c7ff66);
+    transform: rotate(-6deg);
+    box-shadow: 0 0 18px rgba(158,255,0,.45);
+    opacity:0.9;
+  }
+  @media (max-width:560px){
+    .slash{ top:66px; }
+  }
+
+  .controls{ display:flex; gap:8px; align-items:center }
+  .edge-btn{
+    border:2px solid var(--sunset); color:var(--sunset); background:transparent;
+    padding:10px 16px; border-radius:12px; cursor:pointer; letter-spacing:.06em;
+    font-family:'Poppins', sans-serif; font-weight:700; text-transform:uppercase;
+    transition: transform .12s ease, box-shadow .12s ease, color .12s ease, background .12s ease;
+  }
+  .edge-btn:hover{ transform: translateY(-1px) }
+  .active .edge-btn{ background:var(--sunset); color:#1b130f; box-shadow: 0 0 .8rem rgba(255,154,90,.65) }
+
+  .title{
+    font-family:'Poppins', sans-serif; font-weight:700;
+    font-size:clamp(28px, 5vw, 44px);
+    margin:18px 0 6px;
+    text-shadow: 0 0 18px rgba(255,154,90,.45);
+  }
+  .subtitle{ opacity:.92; margin:0 0 14px; font-size:clamp(16px, 2.6vw, 18px) }
+
+  .strip{
+    display:flex; justify-content:space-between; align-items:center; gap:10px;
+    border:1px solid var(--line); border-radius:14px; padding:10px 12px; margin:16px 0 18px;
+    background: rgba(0,0,0,.25);
+  }
+  .tag{ font-family:'Poppins', sans-serif; letter-spacing:.12em; font-weight:700; color:var(--rose) }
+  .timer{
+    font-family:'Poppins', sans-serif; font-size: clamp(22px, 4.5vw, 34px); letter-spacing:.06em;
+    text-shadow:0 0 10px rgba(122,92,255,.5);
+    min-width: 210px; text-align:right;
+  }
+
+  .panel{
+    border:1px solid var(--line); border-radius:16px; padding:16px;
+    background: linear-gradient(180deg, rgba(122,92,255,.12), rgba(255,107,158,.10));
+  }
+  .panel p{ margin:10px 0 0; font-size: clamp(16px, 2.8vw, 18px); }
+
+  /* softer anime style glow on name */
+  .glitch{
+    position:relative; display:inline-block; font-weight:700;
+    text-shadow: 0 0 10px rgba(255,107,158,.55), 0 0 20px rgba(122,92,255,.45);
+  }
+
+  .footer{ display:flex; flex-wrap:wrap; gap:10px; align-items:center; justify-content:space-between; margin-top:16px; opacity:.95; font-size:14px }
+  .chip{
+    border:1px solid var(--line); padding:6px 10px; border-radius:999px; font-family:'Poppins'; letter-spacing:.06em;
+    background: rgba(0,0,0,.25);
+  }
+  .sr-only{
+    position:absolute; left:-9999px; top:auto; width:1px; height:1px; overflow:hidden;
+  }
+</style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="card" id="card">
+      <div class="glow"></div>
+
+      <div class="header">
+        <div class="slash" aria-hidden="true"></div>
+        <div class="controls">
+          <button class="edge-btn" id="toggle">Start Countdown</button>
+        </div>
       </div>
-      <script>
-         // --- Elements & state
-         const timerEl  = document.getElementById('timer');
-         const toggleBtn= document.getElementById('toggle');
-         const stateEl  = document.getElementById('state');
-         const themeEl  = document.getElementById('edgerunnersTheme');
-         
-         let active = false;
-         let remaining = 24 * 1000; // 24 seconds
-         let last = performance.now();
-         
-         function format(ms){
-           ms = Math.max(0, ms);
-           const total= Math.floor(ms/1000);
-           const mm = String(Math.floor(total/60)).padStart(2,'0');
-           const ss = String(total%60).padStart(2,'0');
-           const cs = String(Math.floor((ms%1000)/10)).padStart(2,'0');
-           return `${mm}:${ss}:${cs}`;
-         }
-         
-         // Start/stop the theme song (requires user interaction first)
-         async function playTheme(){
-           if (!themeEl) return;
-           try {
-             themeEl.currentTime = 0;
-             themeEl.volume = 0.8;
-             await themeEl.play();
-           } catch(e){ console.warn('Theme playback blocked or failed:', e); }
-         }
-         
-         function stopTheme(){
-           if (!themeEl) return;
-           try { themeEl.pause(); } catch(e){}
-         }
-         
-         // Toggle "Edge Mode" (visual emphasis only; timer always ticks)
-         toggleBtn.addEventListener('click', ()=>{
-           active = !active;
-           document.documentElement.style.setProperty('--world-speed', active ? 2.0 : 1);
-           document.body.classList.toggle('active', active);
-           toggleBtn.textContent = active ? 'Deactivate Edge Mode' : 'Activate Edge Mode';
-         });
-         
-         // Confetti (warmer palette to match anime)
-         function confetti(){
-           const n = 120;
-           const colors = ['#ff9a5a','#ff6b9e','#7a5cff','#ffd1a8'];
-           for(let i=0;i<n;i++){
-             const p = document.createElement('div');
-             p.style.position='fixed';
-             p.style.left = (Math.random()*100)+'vw';
-             p.style.top  = '-8px';
-             p.style.width = '6px';
-             p.style.height= '10px';
-             p.style.background = colors[i%colors.length];
-             p.style.transform = `rotate(${Math.random()*180}deg)`;
-             p.style.opacity = '0.9';
-             p.style.zIndex = 9999;
-             p.style.pointerEvents = 'none';
-             document.body.appendChild(p);
-             const duration = 1300 + Math.random()*1300;
-             p.animate([
-               { transform:`translateY(0) rotate(0deg)`, opacity:1 },
-               { transform:`translateY(100vh) rotate(${120+Math.random()*120}deg)`, opacity:0.9 }
-             ], { duration, easing:'cubic-bezier(.2,.8,.2,1)' }).onfinish = ()=> p.remove();
-           }
-         }
-         
-         // Unified tick: soften when "active" for dramatic feel
-         function tick(now){
-           const dt = now - last; 
-           last = now;
-         
-           remaining -= active ? dt * 0.35 : dt;
-           if (remaining < 0) remaining = 0;
-           timerEl.textContent = format(remaining);
-         
-           if (remaining === 0 && !window.__party){
-             window.__party = true;
-             if (stateEl) stateEl.textContent = 'STATE: PARTY MODE';
-             toggleBtn.disabled = true;
-             toggleBtn.textContent = '🎉 Complete';
-             confetti();
-             playTheme(); // 🔊 start your theme song here
-           }
-         
-           requestAnimationFrame(tick);
-         }
-         requestAnimationFrame((t)=>{ last=t; tick(t); });
-      </script>
-   </body>
+
+      <h1 class="title">Happy Birthday, <span class="glitch">Dalton</span> 🌇</h1>
+      <h2 class="sr-only">Edgerunners anime–inspired birthday card</h2>
+      <p class="subtitle">“In Night City, this moment is ours.”</p>
+
+      <div class="strip" role="status" aria-live="polite">
+        <span class="tag">COUNTDOWN</span>
+        <div class="timer" id="timer">00:00:24</div>
+      </div>
+
+      <div class="panel" id="msg">
+        <p>Start the countdown whenever you’re ready.</p>
+        <p style="margin-top:10px; opacity:.92"><em>♡✧˚Love, Rachel⋆｡♡˚</em></p>
+      </div>
+
+      <div class="footer">
+        <div class="chip">Night City // 24</div>
+        <div class="chip" id="state">COUNTDOWN READY</div>
+      </div>
+
+      <!-- Theme song (your file) -->
+      <audio id="edgerunnersTheme" preload="auto">
+        <source src="assets/edgerunners-theme.mp3" type="audio/mpeg">
+      </audio>
+    </div>
+  </div>
+
+<script>
+  // Elements & state
+  const timerEl  = document.getElementById('timer');
+  const toggleBtn= document.getElementById('toggle');
+  const stateEl  = document.getElementById('state');
+  const themeEl  = document.getElementById('edgerunnersTheme');
+
+  let active = false;
+  let remaining = 24 * 1000; // 24 seconds
+  let last = performance.now();
+
+  function format(ms){
+    ms = Math.max(0, ms);
+    const total= Math.floor(ms/1000);
+    const mm = String(Math.floor(total/60)).padStart(2,'0');
+    const ss = String(total%60).padStart(2,'0');
+    const cs = String(Math.floor((ms%1000)/10)).padStart(2,'0');
+    return `${mm}:${ss}:${cs}`;
+  }
+
+  async function playTheme(){
+    if (!themeEl) return;
+    try {
+      themeEl.currentTime = 0;
+      themeEl.volume = 0.8;
+      await themeEl.play();
+    } catch(e){ console.warn('Theme playback blocked or failed:', e); }
+  }
+
+  // Toggle visual emphasis; timer always ticks
+  toggleBtn.addEventListener('click', ()=>{
+    active = !active;
+    document.documentElement.style.setProperty('--world-speed', active ? 2.0 : 1);
+    document.body.classList.toggle('active', active);
+    toggleBtn.textContent = active ? 'Pause' : 'Start Countdown';
+  });
+
+  // Confetti (warm anime palette)
+  function confetti(){
+    const n = 120;
+    const colors = ['#ff9a5a','#ff6b9e','#7a5cff','#ffd1a8'];
+    for(let i=0;i<n;i++){
+      const p = document.createElement('div');
+      p.style.position='fixed';
+      p.style.left = (Math.random()*100)+'vw';
+      p.style.top  = '-8px';
+      p.style.width = '6px';
+      p.style.height= '10px';
+      p.style.background = colors[i%colors.length];
+      p.style.transform = `rotate(${Math.random()*180}deg)`;
+      p.style.opacity = '0.9';
+      p.style.zIndex = 9999;
+      p.style.pointerEvents = 'none';
+      document.body.appendChild(p);
+      const duration = 1300 + Math.random()*1300;
+      p.animate([
+        { transform:`translateY(0) rotate(0deg)`, opacity:1 },
+        { transform:`translateY(100vh) rotate(${120+Math.random()*120}deg)`, opacity:0.9 }
+      ], { duration, easing:'cubic-bezier(.2,.8,.2,1)' }).onfinish = ()=> p.remove();
+    }
+  }
+
+  // Countdown loop
+  function tick(now){
+    const dt = now - last; 
+    last = now;
+
+    remaining -= active ? dt * 0.35 : dt;
+    if (remaining < 0) remaining = 0;
+    timerEl.textContent = format(remaining);
+
+    if (remaining === 0 && !window.__party){
+      window.__party = true;
+      if (stateEl) stateEl.textContent = 'PARTY MODE';
+      toggleBtn.disabled = true;
+      toggleBtn.textContent = '🎉 Complete';
+      confetti();
+      playTheme(); // start your theme song here
+    }
+
+    requestAnimationFrame(tick);
+  }
+  requestAnimationFrame((t)=>{ last=t; tick(t); });
+</script>
+</body>
 </html>
