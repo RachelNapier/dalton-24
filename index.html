@@ -52,23 +52,22 @@
          font-family:'Orbitron', sans-serif; font-weight:700; text-transform:uppercase;
          }
          .audio-toggle{
-  border:1px solid rgba(255,255,255,.25);
-  background: rgba(0,0,0,.25);
-  color:#e9f1ff;
-  font-size:16px;
-  padding:8px 10px;
-  border-radius:10px;
-  cursor:pointer;
-  transition:transform .12s ease, box-shadow .12s ease;
-}
-.audio-toggle:hover{ transform: translateY(-1px) }
-.audio-toggle[aria-pressed="true"]{ 
-  background: linear-gradient(90deg, var(--yellow), var(--neon));
-  color:#00161a; 
-  box-shadow: 0 0 .6rem rgba(0,247,255,.5);
-}
-
-<button class="audio-toggle" id="audioToggle" aria-pressed="false" aria-label="Toggle ambient audio">🔊</button>
+         border:1px solid rgba(255,255,255,.25);
+         background: rgba(0,0,0,.25);
+         color:#e9f1ff;
+         font-size:16px;
+         padding:8px 10px;
+         border-radius:10px;
+         cursor:pointer;
+         transition:transform .12s ease, box-shadow .12s ease;
+         }
+         .audio-toggle:hover{ transform: translateY(-1px) }
+         .audio-toggle[aria-pressed="true"]{ 
+         background: linear-gradient(90deg, var(--yellow), var(--neon));
+         color:#00161a; 
+         box-shadow: 0 0 .6rem rgba(0,247,255,.5);
+         }
+         <button class="audio-toggle" id="audioToggle" aria-pressed="false" aria-label="Toggle ambient audio">🔊</button>
          .title{
          font-family:'Orbitron', sans-serif; font-size:clamp(28px,5vw,46px);
          margin:14px 0 6px; text-shadow:0 0 10px rgba(0,247,255,.6);
@@ -176,82 +175,82 @@
            toggleBtn.textContent = active ? 'Deactivate Sandevistan' : 'Activate Sandevistan';
          });
          // --- "cyber hum" (Audio) ---
-let audioCtx, humGain, humStarted = false;
-
-function initHum(){
-  if (humStarted) return;
-  humStarted = true;
-
-  audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-
-  // Two slightly detuned oscillators for a warm, sci-fi bed
-  const osc1 = audioCtx.createOscillator();
-  const osc2 = audioCtx.createOscillator();
-  osc1.type = 'sawtooth';  osc2.type = 'sine';
-  osc1.frequency.value = 56;      // base Hz
-  osc2.frequency.value = 112;     // octave up
-  osc2.detune.value = 6;          // slight detune
-
-  // Gentle low-pass to round it off
-  const lpf = audioCtx.createBiquadFilter();
-  lpf.type = 'lowpass';
-  lpf.frequency.value = 420;
-
-  // Slow LFO to subtly move the filter (adds life)
-  const lfo = audioCtx.createOscillator();
-  const lfoGain = audioCtx.createGain();
-  lfo.frequency.value = 0.12;
-  lfoGain.gain.value = 60; // how much the filter moves
-  lfo.connect(lfoGain).connect(lpf.frequency);
-  lfo.start();
-
-  // Master gain (very quiet by default)
-  humGain = audioCtx.createGain();
-  const saved = localStorage.getItem('humMuted') === 'true';
-  humGain.gain.value = saved ? 0 : 0.045;  // ~-26 dB
-
-  // Wire up
-  osc1.connect(lpf);
-  osc2.connect(lpf);
-  lpf.connect(humGain).connect(audioCtx.destination);
-
-  osc1.start();
-  osc2.start();
-}
-
-function setHumMuted(muted){
-  if (!humGain) return;
-  humGain.gain.setTargetAtTime(muted ? 0 : 0.045, audioCtx.currentTime, 0.02);
-  localStorage.setItem('humMuted', String(muted));
-  const btn = document.getElementById('audioToggle');
-  if (btn){
-    btn.setAttribute('aria-pressed', String(!muted));
-    btn.textContent = muted ? '🔇' : '🔊';
-  }
-}
-
-// Hook up the UI button
-const audioToggleBtn = document.getElementById('audioToggle');
-if (audioToggleBtn){
-  // reflect saved state on load
-  const savedMuted = localStorage.getItem('humMuted') === 'true';
-  audioToggleBtn.setAttribute('aria-pressed', String(!savedMuted));
-  audioToggleBtn.textContent = savedMuted ? '🔇' : '🔊';
-
-  audioToggleBtn.addEventListener('click', async ()=>{
-    if (!audioCtx) initHum();
-    if (audioCtx.state === 'suspended') await audioCtx.resume();
-    const muted = humGain.gain.value > 0 ? true : false;
-    setHumMuted(muted);
-  });
-}
-
-// Start hum the first time user hits Sandevistan
-toggleBtn.addEventListener('click', async ()=>{
-  if (!audioCtx) initHum();
-  if (audioCtx.state === 'suspended') await audioCtx.resume();
-});
-
+         let audioCtx, humGain, humStarted = false;
+         
+         function initHum(){
+         if (humStarted) return;
+         humStarted = true;
+         
+         audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+         
+         // Two slightly detuned oscillators for a warm, sci-fi bed
+         const osc1 = audioCtx.createOscillator();
+         const osc2 = audioCtx.createOscillator();
+         osc1.type = 'sawtooth';  osc2.type = 'sine';
+         osc1.frequency.value = 56;      // base Hz
+         osc2.frequency.value = 112;     // octave up
+         osc2.detune.value = 6;          // slight detune
+         
+         // Gentle low-pass to round it off
+         const lpf = audioCtx.createBiquadFilter();
+         lpf.type = 'lowpass';
+         lpf.frequency.value = 420;
+         
+         // Slow LFO to subtly move the filter (adds life)
+         const lfo = audioCtx.createOscillator();
+         const lfoGain = audioCtx.createGain();
+         lfo.frequency.value = 0.12;
+         lfoGain.gain.value = 60; // how much the filter moves
+         lfo.connect(lfoGain).connect(lpf.frequency);
+         lfo.start();
+         
+         // Master gain (very quiet by default)
+         humGain = audioCtx.createGain();
+         const saved = localStorage.getItem('humMuted') === 'true';
+         humGain.gain.value = saved ? 0 : 0.045;  // ~-26 dB
+         
+         // Wire up
+         osc1.connect(lpf);
+         osc2.connect(lpf);
+         lpf.connect(humGain).connect(audioCtx.destination);
+         
+         osc1.start();
+         osc2.start();
+         }
+         
+         function setHumMuted(muted){
+         if (!humGain) return;
+         humGain.gain.setTargetAtTime(muted ? 0 : 0.045, audioCtx.currentTime, 0.02);
+         localStorage.setItem('humMuted', String(muted));
+         const btn = document.getElementById('audioToggle');
+         if (btn){
+         btn.setAttribute('aria-pressed', String(!muted));
+         btn.textContent = muted ? '🔇' : '🔊';
+         }
+         }
+         
+         // Hook up the UI button
+         const audioToggleBtn = document.getElementById('audioToggle');
+         if (audioToggleBtn){
+         // reflect saved state on load
+         const savedMuted = localStorage.getItem('humMuted') === 'true';
+         audioToggleBtn.setAttribute('aria-pressed', String(!savedMuted));
+         audioToggleBtn.textContent = savedMuted ? '🔇' : '🔊';
+         
+         audioToggleBtn.addEventListener('click', async ()=>{
+         if (!audioCtx) initHum();
+         if (audioCtx.state === 'suspended') await audioCtx.resume();
+         const muted = humGain.gain.value > 0 ? true : false;
+         setHumMuted(muted);
+         });
+         }
+         
+         // Start hum the first time user hits Sandevistan
+         toggleBtn.addEventListener('click', async ()=>{
+         if (!audioCtx) initHum();
+         if (audioCtx.state === 'suspended') await audioCtx.resume();
+         });
+         
       </script>
       <script>
          // Confetti for Dalton green (#00e676), with Edgerunners cyan/magenta/yellow
@@ -278,27 +277,27 @@ toggleBtn.addEventListener('click', async ()=>{
            }
          }
          
-  function tick(now){
-  const dt = now - last; 
-  last = now;
-
-  // Decrease time (slower if Sandevistan is active)
-  remaining -= active ? dt * 0.35 : dt;
-
-  // Clamp to zero and update display
-  if (remaining < 0) remaining = 0;
-  timerEl.textContent = format(remaining);
-
-  //  Fire confetti when timer hits zero
-  if (remaining === 0 && !window.__confettiFired) {
-    window.__confettiFired = true;
-    stateEl.textContent = 'STATE: PARTY MODE';
-    toggleBtn.disabled = true;
-    toggleBtn.textContent = '🎂 Complete';
-    confetti();
-
-    setHumMuted(true); // fade the hum out when party mode triggers
-  }
+         function tick(now){
+         const dt = now - last; 
+         last = now;
+         
+         // Decrease time (slower if Sandevistan is active)
+         remaining -= active ? dt * 0.35 : dt;
+         
+         // Clamp to zero and update display
+         if (remaining < 0) remaining = 0;
+         timerEl.textContent = format(remaining);
+         
+         //  Fire confetti when timer hits zero
+         if (remaining === 0 && !window.__confettiFired) {
+         window.__confettiFired = true;
+         stateEl.textContent = 'STATE: PARTY MODE';
+         toggleBtn.disabled = true;
+         toggleBtn.textContent = '🎂 Complete';
+         confetti();
+         
+         setHumMuted(true); // fade the hum out when party mode triggers
+         }
       </script>
    </body>
 </html>
